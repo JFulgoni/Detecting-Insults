@@ -26,6 +26,26 @@ def get_train():
     # print insult_list[0], date_list[0], comment_list[0]
     return insult_list, date_list, comment_list
 
+def get_test():
+    insult_list = []
+    date_list = []
+    comment_list = []
+
+    filename = 'Data/test.csv'
+
+    with open(filename, 'rb') as csvfile:
+        csvreader = csv.reader(csvfile, delimiter = ',', quotechar = '"')
+        counter = False
+        for row in csvreader:
+            if counter:
+                insult_list.append(row[0])
+                date_list.append(row[1])
+                comment_list.append(row[2])
+            counter = True
+    csvfile.close()
+    return insult_list, date_list, comment_list
+
+
 # this method is really just for testing
 # we'll use the other get data methods from our main file to actually run the code
 def main():
