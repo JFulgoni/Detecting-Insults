@@ -1,60 +1,31 @@
 from __future__ import division
 import data_helper
-from nltk.corpus import stopwords
-from nltk.stem.snowball import SnowballStemmer
-import string
+import comment_helper
 
 __author__ = 'johnfulgoni'
 
-en_stopwords = stopwords.words('english')
-stemmer = SnowballStemmer('english')
+def check(insult_solutions, insult_test):
+    print "Number of test comments: ", len(insult_test)
+    print "Number of solution comments: ", len(insult_solutions)
 
-def process_comments(comments):
-    comment_list = []
-    for comment in comments:
-        # taking care of a lot of different factors when processing the comments
-        # remove punctuation, lowercase, stopwords, stem words
-        # turn into a list of lists
-        comment = comment.strip(string.punctuation)
-        comment = comment.lower()
-        comment = comment.split()
-        comment = remove_stopwords(comment)
-        comment = stem_words(comment)
-        comment_list.append(comment)
-        # print comment
-        # break
-    return comment_list
+    number_correct = 0
+    #number_matches = 0
+    for i in range (0, len(insult_test)):
+        if i < 5:
+            print insult_solutions[i], insult_test[i]
 
-def remove_stopwords(s):
-    result = []
-    for word in s:
-        if word not in en_stopwords:
-            result.append(word)
-    return result
+        # print type(insult_solutions[i])
+        # print type(insult_test[i])
+        # if insult_solutions[i] == 0:
+        #     print 'derp'
+        #     break
+        if int(insult_solutions[i]) == insult_test[i]:
+            # print "In here"
+            number_correct += 1
 
-def stem_words(s):
-    result = []
-    for word in s:
-        result.append(stemmer.stem(word))
-    return result
-
-def classify_comment(comment_train, test_comment, threshold):
-    max_similarity = 0.0
-    max_comment_index = -1
-    for i, comment in enumerate(comment_train):
-        similarity = jaccard(comment, test_comment)
-        if similarity > max_similarity:
-            max_similarity = similarity
-            max_comment_index = i
-        # print similarity
-    is_insult = 0
-    if max_similarity > threshold:
-        is_insult = 1
-    return is_insult, max_comment_index
-
-#
-def jaccard(comment, test_comment):
-    return len(set(comment).intersection(set(test_comment))) / float(len(set(comment).union(set(test_comment))))
+    #print "Number matches: ", number_matches
+    print "Number correct: ", number_correct
+    print "Percentage correct: ", (number_correct/len(insult_test))
 
 def main():
     print "Reading in Training Data..."
@@ -62,25 +33,33 @@ def main():
 
     # print insult_train[0], date_train[0], comment_train[0]
     print "Processing Training Comments..."
-    comment_train_processed = process_comments(comment_train)
+    comment_train_processed = comment_helper.process_comments(comment_train)
     # for i in range (0, 5):
     #     print insult_train[i], comment_train_processed[i]
 
-    print "Reading in Test Data..."
-    insult_test, date_test, comment_test = data_helper.get_test()
+    print "Reading in Test Data with Solutions..."
+    insult_test_solutions, date_test, comment_test = data_helper.get_test_with_solutions()
     print "Processing Testing Comments..."
-    comment_test_processed = process_comments(comment_test)
+    comment_test_processed = comment_helper.process_comments(comment_test)
 
     print "Classifying Test Comments..."
     insult_check = []
     for i, test_comment in enumerate(comment_test_processed):
-        is_insult, closest_insult = classify_comment(comment_train_processed, test_comment, 0.75)
+        is_insult, closest_insult = comment_helper.classify_comment(comment_train_processed, test_comment, 0.75)
         insult_check.append(is_insult)
-        if is_insult:
-            print "Original Tweet: ", comment_test[i]
-            print "Is Insult? ", is_insult
-            print "Closest Sentence: ", comment_train[closest_insult]
-            break
+        # if is_insult:
+        #     print "Original Tweet: ", comment_test[i]
+        #     print "Is Insult? ", is_insult
+        #     print "Closest Sentence: ", comment_train[closest_insult]
+        #     break
+
+    # print "Reading in Test Data..."
+    # insult_test, date_test, comment_test = data_helper.get_test()
+    # print "Processing Testing Comments..."
+    # comment_test_processed = comment_helper.process_comments(comment_test)
+
+    print "Checking Solutions..."
+    check(insult_test_solutions, insult_check)
 
 if __name__=="__main__":
     main()

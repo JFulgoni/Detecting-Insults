@@ -45,6 +45,25 @@ def get_test():
     csvfile.close()
     return insult_list, date_list, comment_list
 
+def get_test_with_solutions():
+    insult_list = []
+    date_list = []
+    comment_list = []
+
+    filename = 'Data/test_with_solutions.csv'
+
+    with open(filename, 'rb') as csvfile:
+        csvreader = csv.reader(csvfile, delimiter = ',', quotechar = '"')
+        counter = False
+        for row in csvreader:
+            if counter:
+                insult_list.append(row[0])
+                date_list.append(row[1])
+                comment_list.append(row[2])
+            counter = True
+    csvfile.close()
+    return insult_list, date_list, comment_list
+
 
 # this method is really just for testing
 # we'll use the other get data methods from our main file to actually run the code
@@ -52,17 +71,18 @@ def main():
     insult_list = []
     date_list = []
     comment_list = []
-    filename = 'Data/train.csv'
+    filename = 'Data/test_with_solutions.csv'
     with open(filename, 'rb') as csvfile:
         csvreader = csv.reader(csvfile, delimiter = ',', quotechar = '"')
         counter = 0
         for row in csvreader:
+            print row
             if counter < 102 and counter > 0:
                 insult_list.append(row[0])
                 date_list.append(row[1])
                 comment_list.append(row[2])
-                if counter == 1:
-                    print row
+                if counter == 3:
+                    break
             counter += 1
             #print row
     csvfile.close()
