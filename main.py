@@ -43,15 +43,28 @@ def main():
 
     print "Reading in Test Data with Solutions..."
     insult_test_solutions, date_test, comment_test = data_helper.get_test_with_solutions()
+    # print len(insult_test_solutions), len(comment_test)
     print "Processing Testing Comments..."
     comment_test_processed = comment_helper.process_comments(comment_test)
+    # print len(comment_test_processed)
 
     tA = time.time()
     print "Classifying Test Comments..."
     insult_check = []
+    derp = True
     for i, test_comment in enumerate(comment_test_processed):
-        is_insult, closest_insult = comment_helper.classify_comment(comment_train_processed, test_comment, 0.75)
+        # This one is Nearest Neighbor using the Jaccard Similarity
+        # is_insult, closest_insult = comment_helper.classify_jaccard(comment_train_processed, test_comment, insult_train, 0.75)
+
+        # This one also uses Jaccard, but does kNN instead of just nearest with a threshold
+        is_insult = comment_helper.knn_jaccard(comment_train_processed, test_comment, insult_train, 5)
+
+        # Add it to the list to be checked later
         insult_check.append(is_insult)
+        # if i > 10:
+        #     break
+
+
         # if is_insult:
         #     print "Original Tweet: ", comment_test[i]
         #     print "Is Insult? ", is_insult
