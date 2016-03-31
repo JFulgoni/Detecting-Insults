@@ -4,6 +4,7 @@ import comment_helper
 
 __author__ = 'johnfulgoni'
 
+# checks the test with solutions, prints out total number correct as well as a percentage
 def check(insult_solutions, insult_test):
     print "Number of test comments: ", len(insult_test)
     print "Number of solution comments: ", len(insult_solutions)
@@ -11,8 +12,8 @@ def check(insult_solutions, insult_test):
     number_correct = 0
     #number_matches = 0
     for i in range (0, len(insult_test)):
-        if i < 5:
-            print insult_solutions[i], insult_test[i]
+        # if i < 5:
+        #     print insult_solutions[i], insult_test[i]
 
         # print type(insult_solutions[i])
         # print type(insult_test[i])
@@ -25,8 +26,9 @@ def check(insult_solutions, insult_test):
 
     #print "Number matches: ", number_matches
     print "Number correct: ", number_correct
-    print "Percentage correct: ", (number_correct/len(insult_test))
+    print "Percentage correct: ", (number_correct/len(insult_test) * 100)
 
+# runs core functionality of the program
 def main():
     print "Reading in Training Data..."
     insult_train, date_train, comment_train = data_helper.get_train()
