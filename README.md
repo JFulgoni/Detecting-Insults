@@ -32,3 +32,5 @@ Number correct:  2006 / 2647
 Percentage correct:  75.783906309
 Time taken to classify: 1.0:56.0384778976
 Total time: 2.0:2.66123795509
+
+Current state: tried to remove threshold component from classify_jaccard, now it's getting 0 right. So something is up...
