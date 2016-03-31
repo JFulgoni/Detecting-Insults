@@ -1,6 +1,7 @@
 from __future__ import division
 import data_helper
 import comment_helper
+import time
 
 __author__ = 'johnfulgoni'
 
@@ -25,11 +26,12 @@ def check(insult_solutions, insult_test):
             number_correct += 1
 
     #print "Number matches: ", number_matches
-    print "Number correct: ", number_correct
+    print "Number correct: ", number_correct, '/', len(insult_test)
     print "Percentage correct: ", (number_correct/len(insult_test) * 100)
 
 # runs core functionality of the program
 def main():
+    t0 = time.time()
     print "Reading in Training Data..."
     insult_train, date_train, comment_train = data_helper.get_train()
 
@@ -44,6 +46,7 @@ def main():
     print "Processing Testing Comments..."
     comment_test_processed = comment_helper.process_comments(comment_test)
 
+    tA = time.time()
     print "Classifying Test Comments..."
     insult_check = []
     for i, test_comment in enumerate(comment_test_processed):
@@ -60,8 +63,16 @@ def main():
     # print "Processing Testing Comments..."
     # comment_test_processed = comment_helper.process_comments(comment_test)
 
+    tB = time.time()
     print "Checking Solutions..."
     check(insult_test_solutions, insult_check)
+
+    tC = time.time()
+
+    am, asec = divmod(tB-tA, 60)
+    print 'Time taken to classify: ' + str(am) + ':' + str(asec)
+    bm, bsec = divmod(tC-t0, 60)
+    print 'Total time: ' + str(bm) + ":" + str(bsec)
 
 if __name__=="__main__":
     main()
