@@ -91,12 +91,10 @@ def classify_jaccard(comment_train, test_comment, comment_solutions, threshold):
             max_comment_index = i
         # print similarity
 
+    # original error that still got 74% right
     # is_insult = 0
     # if max_similarity > threshold and max_comment_index != -1:
-    #     # is_insult = 1 even though this is wrong, it still gets 75%????
-    #     is_insult = comment_solutions[max_comment_index]
-    # else:
-    #     is_insult = 1
+    #     is_insult = 1 # even though this is wrong, it still gets 75%????
 
     is_insult = int(comment_solutions[max_comment_index])
 
