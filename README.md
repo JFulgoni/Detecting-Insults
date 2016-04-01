@@ -14,23 +14,22 @@ Percentage correct: 74.5749905553
 Time taken to classify: 1.0:47.6741778851
 Total time: 1.0:54.8430130482
 
-With it actually fixed, it does much worse:
+**Fixed Nearest Neighbor Classification:**
+Number correct:  1845 / 2647
+Percentage correct:  69.7015489233
+Time taken to classify: 1.0:35.1293609142
+Total time: 1.0:41.4771778584
 
-Number correct:  668 / 2647
-Percentage correct:  25.2361163581
-Time taken to classify: 1.0:44.8308780193
-Total time: 1.0:51.5207140446
-
-kNN of 3:
+**kNN of 3:**
 Number correct:  1948 / 2647
 Percentage correct:  73.5927465055
 Time taken to classify: 1.0:53.6695609093
 Total time: 2.0:0.29797911644
 
-kNN of 5: (Best so far)
+**kNN of 5: (Best so far)**
 Number correct:  2006 / 2647
 Percentage correct:  75.783906309
 Time taken to classify: 1.0:56.0384778976
 Total time: 2.0:2.66123795509
 
-Current state: tried to remove threshold component from classify_jaccard, now it's getting 0 right. So something is up...
+Current state: fixed bug with Nearest Neighbor, kNN of 5 is still the best classifier.

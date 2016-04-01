@@ -59,9 +59,16 @@ def main():
         # This one also uses Jaccard, but does kNN instead of just nearest with a threshold
         # is_insult = comment_helper.knn_jaccard(comment_train_processed, test_comment, insult_train, 5)
 
+        # if is_insult and derp:
+        #     print test_comment, closest_insult
+        #     derp = False
+
         # Add it to the list to be checked later
         insult_check.append(is_insult)
-        # if i > 10:
+        # if i < 5:
+        #      print is_insult, test_comment
+        #      print insult_train[closest_insult]
+        # else:
         #     break
 
 
@@ -79,6 +86,10 @@ def main():
     tB = time.time()
     print "Checking Solutions..."
     check(insult_test_solutions, insult_check)
+
+    # print "Insult train test: "
+    # for x in range (0, 5):
+    #     print insult_test_solutions[x], insult_check[x]
 
     tC = time.time()
 

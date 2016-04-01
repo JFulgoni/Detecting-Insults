@@ -98,7 +98,7 @@ def classify_jaccard(comment_train, test_comment, comment_solutions, threshold):
     # else:
     #     is_insult = 1
 
-    is_insult = comment_solutions[max_comment_index]
+    is_insult = int(comment_solutions[max_comment_index])
 
     return is_insult, max_comment_index
 
