@@ -20,7 +20,7 @@ def validate_answer():
         if is_correct_input(is_correct):
             right_input = True
 
-
+# This can be used to test an individual tweet at a time from the command line
 def main():
     print "Reading in Training Data..."
     insult_train, date_train, comment_train = data_helper.get_train()
