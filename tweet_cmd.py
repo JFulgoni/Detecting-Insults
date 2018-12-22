@@ -48,8 +48,5 @@ def main():
         validate_answer()
 
 
-
-
-
 if __name__ == "__main__":
     main()
