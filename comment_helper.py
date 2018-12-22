@@ -45,11 +45,13 @@ def knn_jaccard(comment_train, test_comment, comment_solutions, k):
     similarity_list = []
     index_list = []
     insult_list = []
+    comment_list = []
     # first set up arrays of the proper sizes
     for i in range (0, k):
         similarity_list.append(0)
         index_list.append(-1)
         insult_list.append(-1)
+        comment_list.append(-1)
 
     for i, comment in enumerate(comment_train):
         similarity = jaccard(comment, test_comment)
@@ -68,6 +70,11 @@ def knn_jaccard(comment_train, test_comment, comment_solutions, k):
                     insult_temp = insult_list[j]
                     insult_list[j - 1] = insult_temp
                     insult_list[j] = comment_solutions[i]
+
+                    comment_temp = comment_list[j]
+                    comment_list[j - 1] = comment_temp
+                    comment_list[j] = i
+
                 else:
                     similarity_list[j] = similarity
                     index_list[j] = i
@@ -77,7 +84,7 @@ def knn_jaccard(comment_train, test_comment, comment_solutions, k):
     #print insult_list
     data = Counter(insult_list)
     is_insult = int(data.most_common(1)[0][0])
-    return is_insult
+    return is_insult, comment_list
 
 
 def classify_jaccard(comment_train, test_comment, comment_solutions, threshold):

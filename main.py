@@ -54,7 +54,8 @@ def main():
     derp = True
     for i, test_comment in enumerate(comment_test_processed):
         # This one is Nearest Neighbor using the Jaccard Similarity
-        is_insult, closest_insult = comment_helper.classify_jaccard(comment_train_processed, test_comment, insult_train, 0.75)
+        is_insult, closest_insult = comment_helper.classify_jaccard(comment_train_processed, test_comment, insult_train,
+                                                                    0.75)
 
         # This one also uses Jaccard, but does kNN instead of just nearest with a threshold
         # is_insult = comment_helper.knn_jaccard(comment_train_processed, test_comment, insult_train, 5)
@@ -98,5 +99,5 @@ def main():
     bm, bsec = divmod(tC-t0, 60)
     print 'Total time: ' + str(bm) + ":" + str(bsec)
 
-if __name__=="__main__":
+if __name__=="__main__" :
     main()
