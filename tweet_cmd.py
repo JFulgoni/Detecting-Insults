@@ -3,22 +3,19 @@ import datetime
 import data_helper
 import comment_helper
 
+correctness_map = {"1y": 1, "1n": 0, "0y": 0, "0n": 1}
+
 
 def is_correct_input(is_correct):
     return is_correct.lower() == "y" or is_correct.lower() == "n"
 
 
-def validate_answer():
+def validate_answer(is_insult):
     is_correct = raw_input("Were we correct? [y/n]\n")
-    if is_correct_input(is_correct):
-        right_input = True
-    else:
-        right_input = False
-    print datetime.datetime.now().strftime("%Y%m%d%H%M") + '\n'
-    while not right_input:
+    while not is_correct_input(is_correct):
         is_correct = raw_input("Please enter [y/n]\n")
-        if is_correct_input(is_correct):
-            right_input = True
+    return correctness_map[str(is_insult) + is_correct]
+
 
 # This can be used to test an individual tweet at a time from the command line
 def main():
@@ -38,14 +35,14 @@ def main():
             continue
 
         is_insult, closest_insult = comment_helper.knn_jaccard(comment_train_processed, cmd_input, insult_train, 5)
-
         print is_insult
-        if is_insult == 1:
-            tweet_list = []
-            for val in closest_insult:
-                tweet_list.append(comment_train[val])
+
+        if is_insult:
+            tweet_list = [comment_train[item] for item in closest_insult]
             print "Closest Tweets", tweet_list
-        validate_answer()
+
+        tweet_date = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        data_helper.write_new_data(validate_answer(is_insult), tweet_date, cmd_input)
 
 
 if __name__ == "__main__":
